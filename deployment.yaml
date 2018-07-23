@@ -1,0 +1,27 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: simple-chat-app
+  labels:
+    app: simple-chat-app
+spec:
+  selector:
+    matchLabels:
+      app: simple-chat-app
+      tier: webapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: simple-chat-app
+        tier: webapp
+    spec:
+      containers:
+      - name: simple-chat-app
+        image: prod-cluster.icp:8500/sa-labs/simple-chat-app:1.0
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 3000
